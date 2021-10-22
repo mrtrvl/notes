@@ -8,15 +8,18 @@
   <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-  <h1>Noodid</h1>
+  <h1>Notes</h1>
   <div id="canvas-container">
     <canvas id="canvas" height="600" width="1000"></canvas>
     <h2 id="noteName"></h2>
     <h3 id="noteKey"></h3>
     <label for="selectKey">Select clef type</label>
     <select name="key" id="selectKey"></select>
+    <br>
     <label for="noteNameType">Select note naming</label>
     <select name="nameType" id="noteNameType"></select>
+    <br>
+    <button id="resetCanvas">Clear</button>
   </div>
   <script src="./js/notesConfig.js"></script>
   <script src="./js/graphics.js"></script>

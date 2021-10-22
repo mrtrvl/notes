@@ -56,6 +56,7 @@ const initNoteBoundaries = () => {
 const getCenterInBoundariesAndNoteName = (y, boundaries) => {
   const {
     lineStart,
+    lineEnd,
     noteRadius,
     noteSpace,
     noteCount,
@@ -68,6 +69,11 @@ const getCenterInBoundariesAndNoteName = (y, boundaries) => {
   // Get coordinate on x-axis according to noteCount
   const noteDiameter = noteRadius * 2;
   center.x = lineStart.x + noteDiameter + ((noteDiameter + noteSpace) * noteCount);
+  if (center.x >= lineEnd.x) {
+    initCanvas();
+    notesConfig.noteCount = 2;
+    center.x = lineStart.x + noteDiameter + ((noteDiameter + noteSpace) * notesConfig.noteCount);
+  }
   // Get coordinate on y-axis according to noteLine position and mouseclick y-coordinate
   for (let i = 0; i < boundaries.length; i++) {
     if (y >= boundaries[i].upperY && y <= boundaries[i].lowerY) {
@@ -184,6 +190,13 @@ const initCanvas = () => {
   notesConfig.noteCount = 2;
 }
 
+const initResetButton = () => {
+  const button = document.querySelector('#resetCanvas');
+  button.addEventListener('click', event => {
+    initCanvas();
+  });
+}
+
 /**
  * Initialize app, create note boundaries and select elements
  */
@@ -193,6 +206,7 @@ const init = () => {
   const boundaries = initNoteBoundaries();
   createKeySelectOptions();
   createnoteNameTypeSelectOptions();
+  initResetButton();
   updateNoteInfo();
 
   // Start listening for mouse click
