@@ -1,20 +1,24 @@
+// Clef images
 const clefImage = new Image();
 const bassClefImage = new Image();
 clefImage.src = './img/clef.svg';
 bassClefImage.src = './img/bassClef.svg';
 
+/**
+ * Draw clef according to selected clef type
+ */
 const drawClef = () => {
   const { ctx, defaultKey } = notesConfig;
   if (defaultKey === 'clef') {
-    console.log('drawing clef');
     ctx.drawImage(clefImage, 0, 40, 200, 350);
   } else {
-    console.log('drawing bass clef');
     ctx.drawImage(bassClefImage, 0, 83, 150, 200);
   }
 }
 
-// Draw note lines
+/**
+ * Draw note lines
+ */
 const initNoteLines = () => {
   const { ctx, lineStart, lineEnd, noteLineStep, noteLineCount } = notesConfig;
   for (let i = 0; i < noteLineCount; i ++) {
@@ -27,7 +31,10 @@ const initNoteLines = () => {
   }
 }
 
-// Create bounadries array, so we can position note onto or between lines
+/**
+ * Create bounadries array, so we can position note onto or between lines
+ * @returns 
+ */
 const initNoteBoundaries = () => {
   const { lineStart, noteLineStep } = notesConfig;
   const verticalBoundaries = [];
@@ -40,9 +47,22 @@ const initNoteBoundaries = () => {
   return verticalBoundaries;
 }
 
-// Get note center coordinate
+/**
+ * 
+ * @param {*} y 
+ * @param {*} boundaries 
+ * @returns 
+ */
 const getCenterInBoundariesAndNoteName = (y, boundaries) => {
-  const { lineStart, noteRadius, noteSpace, noteCount, noteNames, defaultNoteType, defaultKey } = notesConfig;
+  const {
+    lineStart,
+    noteRadius,
+    noteSpace,
+    noteCount,
+    noteNames,
+    defaultNoteType,
+    defaultKey
+  } = notesConfig;
   let center = { x: 0, y: 0 };
   let noteName = '';
   // Get coordinate on x-axis according to noteCount
@@ -59,6 +79,10 @@ const getCenterInBoundariesAndNoteName = (y, boundaries) => {
   return { center, noteName };
 }
 
+/**
+ * Update string name on page
+ * @param {String} note 
+ */
 const updateNoteInfo = (note) => {
   const { defaultKey } = notesConfig;
   if (!note) note = '';
@@ -68,6 +92,9 @@ const updateNoteInfo = (note) => {
   noteKey.innerHTML = defaultKey;
 }
 
+/**
+ * Create options for clef type select
+ */
 const createKeySelectOptions = () => {
   const { noteNames, defaultKey } = notesConfig;
   const keys = Object.keys(noteNames[0]);
@@ -86,6 +113,9 @@ const createKeySelectOptions = () => {
   });
 }
 
+/**
+ * Create options for note name types
+ */
 const createnoteNameTypeSelectOptions = () => {
   const { noteNames } = notesConfig;
   const names = Object.keys(noteNames[0].clef);
@@ -102,6 +132,13 @@ const createnoteNameTypeSelectOptions = () => {
   });
 }
 
+/**
+ * Write note name
+ * @param {String} noteName - name of note
+ * @param {Object} location - location of note
+ * @param {number} location.x - x-coordinate of note
+ * @param {number} location.y - y-coordinate of note
+ */
 const writeNoteNameOnNote = (noteName, location) => {
   const { ctx } = notesConfig;
   const textOffset = 8;
@@ -110,6 +147,13 @@ const writeNoteNameOnNote = (noteName, location) => {
   ctx.fillText(noteName, location.x - textOffset, location.y + textOffset);
 }
 
+/**
+ * Draw note onto canvas
+ * @param {Object} center - center location of note
+ * @param {number} center.x - x-coordinate of note
+ * @param {number} center.y - y-coordinate of note
+ * @param {String} noteName - name of note
+ */
 const drawNote = (center, noteName) => {
   const { ctx, noteRadius } = notesConfig;
   if (center.y !== 0) {
@@ -126,6 +170,9 @@ const drawNote = (center, noteName) => {
   }
 }
 
+/**
+ * Initialize canvas, draw lines and clef
+ */
 const initCanvas = () => {
   console.log('Init canvas ...');
   const canvas = document.querySelector('#canvas');
@@ -134,9 +181,12 @@ const initCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   initNoteLines();
   drawClef();
+  notesConfig.noteCount = 2;
 }
 
-// Initialize app
+/**
+ * Initialize app, create note boundaries and select elements
+ */
 const init = () => {
   console.log('Init app ...');
   initCanvas();
@@ -154,7 +204,7 @@ const init = () => {
   });
 }
 
-// Start initializing
-bassClefImage.onload = function() {
+// Start initializing - wait until bassClef image is loaded
+bassClefImage.onload = () => {
  init();
 }
