@@ -17,18 +17,6 @@ const notesConfig = {
   noteNames: [
     {
       clef: {
-        german: 'H5',
-        english: 'B5',
-        neoLatin: 'si',
-      },
-      bassClef: {
-        german: 'C4',
-        english: 'C4',
-        neoLatin: 'do',
-      },
-    },
-    {
-      clef: {
         german: 'A5',
         english: 'A5',
         neoLatin: 'la',
@@ -191,4 +179,5 @@ const notesConfig = {
   gameScore: 0,
   synth: null,
   audioOn: false,
+  easy: false,
 };

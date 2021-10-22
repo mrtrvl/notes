@@ -61,8 +61,6 @@ const getCenterInBoundariesAndNoteName = (y, boundaries) => {
     noteSpace,
     noteCount,
     noteNames,
-    defaultNoteType,
-    defaultKey
   } = notesConfig;
   let center = { x: 0, y: 0 };
   let noteName = '';
@@ -79,7 +77,7 @@ const getCenterInBoundariesAndNoteName = (y, boundaries) => {
     if (y >= boundaries[i].upperY && y <= boundaries[i].lowerY) {
       y = (boundaries[i].lowerY - boundaries[i].upperY) / 2 + boundaries[i].upperY;
       center.y = y;
-      noteName = noteNames[i + 1];
+      noteName = noteNames[i];
     }
   }
   return { center, noteName };
@@ -132,10 +130,11 @@ const createnoteNameTypeSelectOptions = () => {
  */
 const writeNoteNameOnNote = (noteName, location) => {
   const { ctx, defaultKey, defaultNoteType } = notesConfig;
-  const textOffset = 8;
+  const textOffsetY = 8;
+  const textOffsetX = 10;
   ctx.fillStyle = "white";
   ctx.font = '20px Arial';
-  ctx.fillText(noteName[defaultKey][defaultNoteType], location.x - textOffset, location.y + textOffset);
+  ctx.fillText(noteName[defaultKey][defaultNoteType], location.x - textOffsetX, location.y + textOffsetY);
 }
 
 /**
@@ -146,7 +145,9 @@ const writeNoteNameOnNote = (noteName, location) => {
  * @param {String} noteName - name of note
  */
 const drawNote = (center, noteName) => {
-  const { ctx, noteRadius, gameIsOn, gameNote, synth, defaultKey, defaultNoteType } = notesConfig;
+  const { ctx, noteRadius, gameIsOn, gameNote, synth, defaultKey, defaultNoteType, audioOn, easy } = notesConfig;
+  const actionBox = document.querySelector('#actionBox');
+  const actionText = document.querySelector('#actionText');
   if (!synth) {
     notesConfig.synth = new Tone.Synth().toDestination();
   }
@@ -162,18 +163,25 @@ const drawNote = (center, noteName) => {
     if (gameIsOn) {
       let success = false;
       if (noteName[defaultKey][defaultNoteType] === gameNote) {
-        console.log('Yeah!');
         success = true;
         notesConfig.gameScore = notesConfig.gameScore + 1;
+        actionBox.classList.remove('has-background-danger');
+        actionBox.classList.add('has-background-success');
+        actionText.innerHTML = '+1';
       } else {
-        console.log('Ohh');
+        actionBox.classList.remove('has-background-success');
+        actionBox.classList.add('has-background-danger');
         notesConfig.gameScore -= 1;
+        actionText.innerHTML = '-1';
       }
+      if (easy) writeNoteNameOnNote(noteName, center);
       game(success);
     } else {
-      writeNoteNameOnNote(noteName, center)
+      writeNoteNameOnNote(noteName, center);
     }
-    notesConfig.synth.triggerAttackRelease(noteName[defaultKey].english, '4n');
+    if (audioOn) {
+      notesConfig.synth.triggerAttackRelease(noteName[defaultKey].english, '4n');
+    }
   }
 }
 
@@ -212,6 +220,20 @@ const initPlayButton = () => {
   });
 }
 
+const initAudioCheckBox = () => {
+  const audioCheckBox = document.querySelector('#audio');
+  audioCheckBox.addEventListener('change', event => {
+    notesConfig.audioOn = event.target.checked;
+  });
+}
+
+const initDifficultyCheckBox = () => {
+  const difficultyCheckBox = document.querySelector('#difficulty');
+  difficultyCheckBox.addEventListener('change', event => {
+    notesConfig.easy = event.target.checked;
+  });
+}
+
 /**
  * Initialize app, create note boundaries and select elements
  */
@@ -223,6 +245,8 @@ const init = () => {
   createnoteNameTypeSelectOptions();
   initResetButton();
   initPlayButton();
+  initAudioCheckBox();
+  initDifficultyCheckBox();
 
   // Start listening for mouse click
   canvas.addEventListener('mousedown', event => {

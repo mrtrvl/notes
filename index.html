@@ -17,14 +17,23 @@
   <div id="canvas-container">
     <canvas id="canvas" height="400" width="1000"></canvas>
     <div class="columns is-centered">
-      <div class="column">
+      <div class="column is-half">
         <div class="box has-background-grey-lighter" id="gameInfo">
-          <div class="columns">
+          <div class="columns media">
+            <div class="column media-left" id="actionBox">
+              <p id="actionText"></p>
+            </div>
             <div class="column">
               <p id="gameText"></p>
             </div>
             <div class="column">
               <p id="gameScoreText"></p>
+            </div>
+            <div class="column is-narrow">
+              <label class="checkbox">
+                <input type="checkbox" name="difficulty" id="difficulty">
+                Easy mode
+              </label>
             </div>
           </div>
         </div>
@@ -40,6 +49,12 @@
         <select class="select is-rounded is-normal" name="nameType" id="noteNameType">
           <option>Select note naming</option>
         </select>
+      </div>
+      <div class="column is-narrow">
+        <label class="checkbox">
+          <input type="checkbox" name="audio" id="audio">
+          Audio
+        </label>
       </div>
     </div>
     <div class="columns is-centered">
