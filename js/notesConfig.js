@@ -186,4 +186,7 @@ const notesConfig = {
   ],
   defaultNoteType: 'german',
   defaultKey: 'clef',
+  gameIsOn: false,
+  gameNote: null,
+  gameScore: 0,
 };

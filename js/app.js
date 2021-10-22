@@ -161,7 +161,7 @@ const writeNoteNameOnNote = (noteName, location) => {
  * @param {String} noteName - name of note
  */
 const drawNote = (center, noteName) => {
-  const { ctx, noteRadius } = notesConfig;
+  const { ctx, noteRadius, gameIsOn, gameNote } = notesConfig;
   if (center.y !== 0) {
     // Increase noteCount
     notesConfig.noteCount ++;
@@ -171,8 +171,21 @@ const drawNote = (center, noteName) => {
       radius: noteRadius
     };
     drawCircle(circle);
-    writeNoteNameOnNote(noteName, center)
     updateNoteInfo(noteName);
+    if (gameIsOn) {
+      let success = false;
+      if (noteName === gameNote) {
+        console.log('Yeah!');
+        success = true;
+        notesConfig.gameScore = notesConfig.gameScore + 1;
+      } else {
+        console.log('Ohh');
+        notesConfig.gameScore -= 1;
+      }
+      game(success);
+    } else {
+      writeNoteNameOnNote(noteName, center)
+    }
   }
 }
 
@@ -191,9 +204,23 @@ const initCanvas = () => {
 }
 
 const initResetButton = () => {
-  const button = document.querySelector('#resetCanvas');
-  button.addEventListener('click', event => {
+  const resetButton = document.querySelector('#resetCanvasButton');
+  resetButton.addEventListener('click', event => {
+    notesConfig.game = false;
+    const gameInfo = document.querySelector('#gameInfo');
+    gameInfo.style.visibility = 'hidden';
     initCanvas();
+  });
+}
+
+const initPlayButton = () => {
+  const playButton = document.querySelector('#playButton');
+  playButton.addEventListener('click', event => {
+    console.log('Game is on');
+    notesConfig.gameIsOn = true;
+    initCanvas();
+    initGameInfo();
+    game();
   });
 }
 
@@ -207,11 +234,11 @@ const init = () => {
   createKeySelectOptions();
   createnoteNameTypeSelectOptions();
   initResetButton();
+  initPlayButton();
   updateNoteInfo();
 
   // Start listening for mouse click
   canvas.addEventListener('mousedown', event => {
-    const x = event.offsetX;
     const y = event.offsetY;
     const { center, noteName } = getCenterInBoundariesAndNoteName(y, boundaries);
     drawNote(center, noteName);
