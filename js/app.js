@@ -79,23 +79,10 @@ const getCenterInBoundariesAndNoteName = (y, boundaries) => {
     if (y >= boundaries[i].upperY && y <= boundaries[i].lowerY) {
       y = (boundaries[i].lowerY - boundaries[i].upperY) / 2 + boundaries[i].upperY;
       center.y = y;
-      noteName = noteNames[i + 1][defaultKey][defaultNoteType];
+      noteName = noteNames[i + 1];
     }
   }
   return { center, noteName };
-}
-
-/**
- * Update string name on page
- * @param {String} note 
- */
-const updateNoteInfo = (note) => {
-  const { defaultKey } = notesConfig;
-  if (!note) note = '';
-  const noteName = document.querySelector('#noteName');
-  const noteKey = document.querySelector('#noteKey');
-  noteName.innerHTML = `Note: ${note}`;
-  noteKey.innerHTML = defaultKey;
 }
 
 /**
@@ -115,7 +102,6 @@ const createKeySelectOptions = () => {
   selectKey.addEventListener('change', event => {
     notesConfig.defaultKey = event.target.value;
     initCanvas();
-    updateNoteInfo();
   });
 }
 
@@ -134,7 +120,6 @@ const createnoteNameTypeSelectOptions = () => {
   });
   selectNoteNameType.addEventListener('change', event => {
     notesConfig.defaultNoteType = event.target.value;
-    updateNoteInfo();
   });
 }
 
@@ -146,11 +131,11 @@ const createnoteNameTypeSelectOptions = () => {
  * @param {number} location.y - y-coordinate of note
  */
 const writeNoteNameOnNote = (noteName, location) => {
-  const { ctx } = notesConfig;
+  const { ctx, defaultKey, defaultNoteType } = notesConfig;
   const textOffset = 8;
   ctx.fillStyle = "white";
   ctx.font = '20px Arial';
-  ctx.fillText(noteName, location.x - textOffset, location.y + textOffset);
+  ctx.fillText(noteName[defaultKey][defaultNoteType], location.x - textOffset, location.y + textOffset);
 }
 
 /**
@@ -161,7 +146,10 @@ const writeNoteNameOnNote = (noteName, location) => {
  * @param {String} noteName - name of note
  */
 const drawNote = (center, noteName) => {
-  const { ctx, noteRadius, gameIsOn, gameNote } = notesConfig;
+  const { ctx, noteRadius, gameIsOn, gameNote, synth, defaultKey, defaultNoteType } = notesConfig;
+  if (!synth) {
+    notesConfig.synth = new Tone.Synth().toDestination();
+  }
   if (center.y !== 0) {
     // Increase noteCount
     notesConfig.noteCount ++;
@@ -171,10 +159,9 @@ const drawNote = (center, noteName) => {
       radius: noteRadius
     };
     drawCircle(circle);
-    updateNoteInfo(noteName);
     if (gameIsOn) {
       let success = false;
-      if (noteName === gameNote) {
+      if (noteName[defaultKey][defaultNoteType] === gameNote) {
         console.log('Yeah!');
         success = true;
         notesConfig.gameScore = notesConfig.gameScore + 1;
@@ -186,6 +173,7 @@ const drawNote = (center, noteName) => {
     } else {
       writeNoteNameOnNote(noteName, center)
     }
+    notesConfig.synth.triggerAttackRelease(noteName[defaultKey].english, '4n');
   }
 }
 
@@ -206,7 +194,7 @@ const initCanvas = () => {
 const initResetButton = () => {
   const resetButton = document.querySelector('#resetCanvasButton');
   resetButton.addEventListener('click', event => {
-    notesConfig.game = false;
+    notesConfig.gameIsOn = false;
     const gameInfo = document.querySelector('#gameInfo');
     gameInfo.style.visibility = 'hidden';
     initCanvas();
@@ -235,7 +223,6 @@ const init = () => {
   createnoteNameTypeSelectOptions();
   initResetButton();
   initPlayButton();
-  updateNoteInfo();
 
   // Start listening for mouse click
   canvas.addEventListener('mousedown', event => {

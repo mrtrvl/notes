@@ -17,169 +17,169 @@ const notesConfig = {
   noteNames: [
     {
       clef: {
-        german: 'H',
-        english: 'B',
+        german: 'H5',
+        english: 'B5',
         neoLatin: 'si',
       },
       bassClef: {
-        german: 'C',
-        english: 'C',
+        german: 'C4',
+        english: 'C4',
         neoLatin: 'do',
       },
     },
     {
       clef: {
-        german: 'A',
-        english: 'A',
+        german: 'A5',
+        english: 'A5',
         neoLatin: 'la',
       },
       bassClef: {
-        german: 'C',
-        english: 'C',
+        german: 'C4',
+        english: 'C4',
         neoLatin: 'do',
       },
     },
     {
       clef: {
-        german: 'G',
-        english: 'G',
+        german: 'G5',
+        english: 'G5',
         neoLatin: 'sol',
       },
       bassClef: {
-        german: 'H',
-        english: 'B',
+        german: 'H4',
+        english: 'B4',
         neoLatin: 'si',
       },
     },
     {
       clef: {
-        german: 'F',
-        english: 'F',
+        german: 'F5',
+        english: 'F5',
         neoLatin: 'fa',
       },
       bassClef: {
-        german: 'A',
-        english: 'A',
+        german: 'A4',
+        english: 'A4',
         neoLatin: 'la',
       },
     },
     {
       clef: {
-        german: 'E',
-        english: 'E',
+        german: 'E5',
+        english: 'E5',
         neoLatin: 'mi',
       },
       bassClef: {
-        german: 'G',
-        english: 'G',
+        german: 'G4',
+        english: 'G4',
         neoLatin: 'sol',
       },
     },
     {
       clef: {
-        german: 'D',
-        english: 'D',
+        german: 'D5',
+        english: 'D5',
         neoLatin: 're',
       },
       bassClef: {
-        german: 'F',
-        english: 'F',
+        german: 'F4',
+        english: 'F4',
         neoLatin: 'fa',
       },
     },
     {
       clef: {
-        german: 'C',
-        english: 'C',
+        german: 'C5',
+        english: 'C5',
         neoLatin: 'do',
       },
       bassClef: {
-        german: 'E',
-        english: 'E',
+        german: 'E4',
+        english: 'E4',
         neoLatin: 'mi',
       },
     },
     {
       clef: {
-        german: 'H',
-        english: 'B',
+        german: 'H4',
+        english: 'B4',
         neoLatin: 'si',
       },
       bassClef: {
-        german: 'D',
-        english: 'D',
+        german: 'D4',
+        english: 'D4',
         neoLatin: 're',
       },
     },
     {
       clef: {
-        german: 'A',
-        english: 'A',
+        german: 'A4',
+        english: 'A4',
         neoLatin: 'la',
       },
       bassClef: {
-        german: 'C',
-        english: 'C',
+        german: 'C3',
+        english: 'C3',
         neoLatin: 'do',
       },
     },
     {
       clef: {
-        german: 'G',
-        english: 'G',
+        german: 'G4',
+        english: 'G4',
         neoLatin: 'sol',
       },
       bassClef: {
-        german: 'H',
-        english: 'B',
+        german: 'H3',
+        english: 'B3',
         neoLatin: 'si',
       },
     },
     {
       clef: {
-        german: 'F',
-        english: 'F',
+        german: 'F4',
+        english: 'F4',
         neoLatin: 'fa',
       },
       bassClef: {
-        german: 'A',
-        english: 'A',
+        german: 'A3',
+        english: 'A3',
         neoLatin: 'la',
       },
     },
     {
       clef: {
-        german: 'E',
-        english: 'E',
+        german: 'E4',
+        english: 'E4',
         neoLatin: 'mi',
       },
       bassClef: {
-        german: 'G',
-        english: 'G',
+        german: 'G3',
+        english: 'G3',
         neoLatin: 'sol',
       },
     },
     {
       clef: {
-        german: 'D',
-        english: 'D',
+        german: 'D4',
+        english: 'D4',
         neoLatin: 're',
       },
       bassClef: {
-        german: 'F',
-        english: 'F',
+        german: 'F3',
+        english: 'F3',
         neoLatin: 'fa',
       },
     },
     {
       clef: {
-        german: 'C',
-        english: 'C',
+        german: 'C4',
+        english: 'C4',
         neoLatin: 'do',
       },
       bassClef: {
-        german: 'E',
-        english: 'E',
+        german: 'E3',
+        english: 'E3',
         neoLatin: 'mi',
       },
     },
@@ -189,4 +189,6 @@ const notesConfig = {
   gameIsOn: false,
   gameNote: null,
   gameScore: 0,
+  synth: null,
+  audioOn: false,
 };

@@ -5,28 +5,57 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-  <h1>Notes</h1>
+  <div class="columns is-centered">
+    <div class="column is-narrow">
+      <h1 class="title is-centered">Notes</h1>
+    </div>
+  </div>
   <div id="canvas-container">
-    <canvas id="canvas" height="600" width="1000"></canvas>
-    <h2 id="noteName"></h2>
-    <h3 id="noteKey"></h3>
-    <label for="selectKey">Select clef type</label>
-    <select name="key" id="selectKey"></select>
+    <canvas id="canvas" height="400" width="1000"></canvas>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="box has-background-grey-lighter" id="gameInfo">
+          <div class="columns">
+            <div class="column">
+              <p id="gameText"></p>
+            </div>
+            <div class="column">
+              <p id="gameScoreText"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-narrow">
+        <select class="select is-rounded is-normal" name="key" id="selectKey">
+          <option>Select clef type</option>
+        </select>
+      </div>
+      <div class="column is-narrow">
+        <select class="select is-rounded is-normal" name="nameType" id="noteNameType">
+          <option>Select note naming</option>
+        </select>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-narrow">
+        <button class="button" id="resetCanvasButton">Reset</button>
+      </div>
+      <div class="column is-narrow">
+        <button class="button" id="playButton">Play game</button>
+      </div>
+    </div>
     <br>
-    <label for="noteNameType">Select note naming</label>
-    <select name="nameType" id="noteNameType"></select>
-    <br>
-    <button id="resetCanvasButton">Reset</button>
-    <br>
-    <button id="playButton">Play game</button>
-    <div id="gameInfo"></div>
   </div>
   <script src="./js/notesConfig.js"></script>
   <script src="./js/graphics.js"></script>
   <script src="./js/game.js"></script>
   <script src="./js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.32/Tone.js" integrity="sha512-USKCQh+O8BX/a2K06xPNTwduhmQvN/m9FhkR7PRysCRlPoqIItl7Qz3xVTZC/oIHe6g5XvnLHDUgGpRMZZTmFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
